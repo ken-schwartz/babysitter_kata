@@ -12,7 +12,7 @@ RSpec.describe 'BabysitterCalculator' do
       expect(value).to eq(12)
     end
   end
-  
+
   context 'when the babysitter works for 1 hour before bedtime and 1 hour after bedtime' do
     let(:start_time) { 17 }
     let(:end_of_job) { 19 }
@@ -20,6 +20,27 @@ RSpec.describe 'BabysitterCalculator' do
     it 'pays $12 an hour from start time to bedtime and $8 an hour after bedtime' do
       value = calculator.calculate_pay
       expect(value).to eq(20)
+    end
+  end
+
+  context 'when bedtime is before midnight' do
+    let(:start_time) { 23 }
+    let(:end_of_job) { 24 }
+    let(:bed_time) { 23 }
+
+    it 'it pays $8 between bedtime and midnight' do
+      value = calculator.calculate_pay
+      expect(value).to eq(8)
+    end
+  end
+
+  context 'when bedtime is after midnight' do
+    let(:start_time) { 24 }
+    let(:end_of_job) { 1 }
+    let(:bed_time) { 24 }
+    it 'it pays $16 between midnight to end of job ' do
+      value = calculator.calculate_pay
+      expect(value).to eq(16)
     end
   end
 end
